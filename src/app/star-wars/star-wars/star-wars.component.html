@@ -1,0 +1,37 @@
+<ng-container *ngIf="startwarsList$|async as startwarsList ">
+    <div class="container-fluid pt-5">
+        <div class="row">
+            <div class="col-6">
+                <input [formControl]="searchForm" class="form-control mb-3" type="text" placeholder="Search...">
+            </div>
+            <div class="col-6" *ngIf="loading$|async">loading...</div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">NAME</th>
+                            <th scope="col">BIRTH_YEAR</th>
+                            <th scope="col">GENDER</th>
+                            <th scope="col">EYE_COLOR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let starwars of startwarsList?.results;let i=index;">
+                            <td>
+                                <a [routerLink]="['/star-wars',i+1]"> {{ starwars?.name }}</a>
+                            </td>
+                            <td>{{ starwars?.birth_year }}</td>
+                            <td>{{ starwars?.gender }}</td>
+                            <td>{{ starwars?.eye_color }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ngb-pagination [hidden]="!count" #pagination [collectionSize]="count" [pageSize]="10" [maxSize]="5" [rotate]="true"
+    [boundaryLinks]="true">
+</ngb-pagination>
